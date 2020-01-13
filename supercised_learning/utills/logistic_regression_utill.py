@@ -47,8 +47,10 @@ def linear_activation_forward(w, b, a, activation):
 def forward_and_backward(w, b, x, y):
     m = x.shape[1]
 
+    # 선형 변환 & 비선형 변환(sigmoid)
     a, activation_cache = sigmoid(np.matmul(w.T, x) + b)
 
+    # calculate cost
     cost = (np.sum(-(y * np.log(a) + (1 - y) * np.log(1 - a)), axis=1) / (2 * m))
     cost = float(cost)
 
