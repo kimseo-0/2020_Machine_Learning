@@ -27,6 +27,7 @@ def forward_and_backward(w, b, x, y):
 
     # mean square error를 사용하는 경우의 cost
     # 서영찡의 코드
+    #cost_square =
 
     # mean square error를 사용하는 경우의 dw, db
     # 서영찡의 코드
