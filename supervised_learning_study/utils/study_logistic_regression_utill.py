@@ -3,6 +3,7 @@ import numpy as np
 
 def initaialize_parameters(dim):
     '''
+    초기 w, b값 설정
     :param dim: data의 차원
     :return: 초기화된 w,b값이 저장되어 있는 dict = {'w' : w, 'b' : b}
     '''
@@ -17,6 +18,13 @@ def initaialize_parameters(dim):
 
 
 def linear_forward(w, b, a):
+    '''
+
+    :param w: [[]] (data dim, 1) -> w.T (1, data dim)
+    :param b: 상수
+    :param a: 데이터 [[]] (data dim, m)
+    :return: 선형 변화 결과 z, linear_cache = w, b, a
+    '''
     linear_cache = w, b, a
     z = np.matmul(w.T, a) + b  # w는 열벡터이기 때문에 행벡터로 변형
 
@@ -24,6 +32,11 @@ def linear_forward(w, b, a):
 
 
 def sigmoid(z):
+    '''
+    비선형 변환 - sigmoid
+    :param z: 선형 변환 결과 z
+    :return: 비선형 변환 결과 a, active_cache = z
+    '''
     active_cache = z
     a = 1 / (1 + np.exp(-z))
 
@@ -31,6 +44,14 @@ def sigmoid(z):
 
 
 def linear_activation_forward(w, b, a, activation):
+    '''
+    선형 변환 & 비선형 변환
+    :param w: [[]]
+    :param b: 상수
+    :param a: [[]]
+    :param activation: 비선형 변환 할 함수 이름 (sigmoid, relu, reaky_rlelu, softmax)
+    :return: a, linear_activation_cache
+    '''
     z, linear_cache = linear_forward(w, b, a)
 
     if activation == 'sigmoid':
@@ -38,10 +59,21 @@ def linear_activation_forward(w, b, a, activation):
 
     linear_activation_cache = (linear_cache, active_cache)
 
-    return a, active_cache
+    return a, linear_activation_cache
 
 
 def forward_and_backward(w, b, x, y, lam):
+    '''
+    선형, 비선형 변환
+    calculate_cost
+    backward_propagation
+    :param w: [[]]
+    :param b: 상수
+    :param x: 데이터 [[]...]
+    :param y: 정답 데이터
+    :param lam:
+    :return: grad = {'dw' : dw, 'db' : db}, costs = [cost]
+    '''
     m = x.shape[1]  # num of data sets
 
     # 선형, 비선형 변환
@@ -53,7 +85,7 @@ def forward_and_backward(w, b, x, y, lam):
 
     # dw, db 구하기
     grads = {}
-    dw = np.matmul(x, (a - y).T + lam * w) / m
+    dw = (np.matmul(x, (a - y).T) + lam * w) / m
     db = np.sum(a - y) / m
     db = float(db)
 
@@ -64,6 +96,18 @@ def forward_and_backward(w, b, x, y, lam):
 
 
 def optimize(w, b, x, y, num_of_iteration, learning_rate, lam):
+    '''
+    gradient decent 과정
+    optimize된 w, b값
+    :param w: [[]]
+    :param b: 상수
+    :param x: 데이터 [[]...data dim]
+    :param y: 정답 데이터 [[]]
+    :param num_of_iteration: 반복 횟수
+    :param learning_rate: 한번 반복할 때 속도 조절(보폭의 크기 조절)
+    :param lam:
+    :return: w, b
+    '''
     params = {}
     costs = []
 
