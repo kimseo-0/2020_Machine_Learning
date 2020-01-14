@@ -16,7 +16,7 @@ def sigmoid(z):
     return a
 
 
-def forward_and_backward(w, b, x, y):
+def forward_and_backward(w, b, x, y, lam):
     m = x.shape[1]
     #
     a = sigmoid(np.matmul(w.T, x) + b)
@@ -27,10 +27,14 @@ def forward_and_backward(w, b, x, y):
 
     # mean square error를 사용하는 경우의 cost
     # 서영찡의 코드
-    #cost_square =
+    cost_square = (np.sum((a - y) * (a - y)) + lam * np.sum(w * w)) / (2 * m)
+    cost_square = float(cost_square)
 
     # mean square error를 사용하는 경우의 dw, db
     # 서영찡의 코드
+    dw_squre = ((np.matmul(np.matmul(a, (a - y).T)), (1 - a).T) + lam * w) / m
+    db_squre = (np.sum(a - y) + lam * w) / m
+    db_squre = float(db_squre)
 
     # cross entropy를 사용하는 경우의 cost
     cost = np.sum(-(y * np.log(a) + (1 - y) * np.log(1 - a))) / m + np.sum(w * w) / (2 * m)
@@ -47,11 +51,11 @@ def forward_and_backward(w, b, x, y):
     return grads, cost
 
 
-def optimize(w, b, x, y, learning_rate, num_of_iterations):
+def optimize(w, b, x, y, learning_rate, num_of_iterations, lam):
     costs = []
 
     for i in range(num_of_iterations):
-        grads, cost = forward_and_backward(w, b, x, y)
+        grads, cost = forward_and_backward(w, b, x, y, lam)
 
         dw = grads["dw"]
         db = grads["db"]
