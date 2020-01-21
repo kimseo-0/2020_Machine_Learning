@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import supercised_learning.logistic_regression_utill as logistic_regression_utill
+import supercised_learning.utills.logistic_regression_utill as logistic_regression_utill
 import data.data_utill as data_utill
 
 

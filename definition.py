@@ -1,0 +1,1 @@
+ROOT_DIR = 'C:\\Users\\김서영\\KIM\\2020\\2020_Machine_Learning'

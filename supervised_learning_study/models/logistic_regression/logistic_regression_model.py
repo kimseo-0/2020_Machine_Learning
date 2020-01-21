@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import supervised_learning_ml_training_server.utils.logistic_regression_util as logistic_regression_util
+import supervised_learning_study.utils.logistic_regression_util as logistic_regression_util
 import data.data_utils as data_utils
 
 
